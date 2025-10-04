@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    network_mode: "host"
+    volumes:
+      - ${MEDIA_PATH:-./media}:/media   # Mount media drive directly
+    restart: unless-stopped
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    network_mode: "host"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - UMASK_SET=002
+      - WEBUI_PORT=8080
+      - WEBUI_USERNAME=admin
+      - WEBUI_PASSWORD=adminadmin
+    volumes:
+      - ${MEDIA_PATH:-./media}:/media   # Media + qb_complete.sh script
+    restart: unless-stopped
