@@ -23,7 +23,7 @@ services:
       - QBIT_PASSWORD=${QBIT_PASSWORD}
     volumes:
       - ${MEDIA_PATH}/qbittorrent_config:/config
-      - ${DOWNLOADS_PATH}:/downloads
+      - ${MEDIA_PATH}/${DOWNLOADS_PATH}:/downloads
     restart: unless-stopped
 
   radarr:
@@ -36,8 +36,8 @@ services:
       - TZ=${TZ}
     volumes:
       - ${MEDIA_PATH}/radarr_config:/config
-      - ${MOVIES_PATH}:/movies
-      - ${DOWNLOADS_PATH}:/downloads
+      - ${MEDIA_PATH}/${MOVIES_PATH}:/movies
+      - ${MEDIA_PATH}/${DOWNLOADS_PATH}:/downloads
     restart: unless-stopped
 
   sonarr:
@@ -50,8 +50,8 @@ services:
       - TZ=${TZ}
     volumes:
       - ${MEDIA_PATH}/sonarr_config:/config
-      - ${SHOWS_PATH}:/tv
-      - ${DOWNLOADS_PATH}:/downloads
+      - ${MEDIA_PATH}/${SHOWS_PATH}:/tv
+      - ${MEDIA_PATH}/${DOWNLOADS_PATH}:/downloads
     restart: unless-stopped
 
   jackett:
@@ -64,7 +64,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ${MEDIA_PATH}/jackett_config:/config
-      - ${DOWNLOADS_PATH}:/downloads
+      - ${MEDIA_PATH}/${DOWNLOADS_PATH}:/downloads
     restart: unless-stopped
 
   jellyseerr:
