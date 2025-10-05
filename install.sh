@@ -59,41 +59,31 @@ else
 fi
 
 # ---------------------------
-# Create media folders
+# Create media subfolders
 # ---------------------------
-echo "📁 Creating media folders..."
+echo "📁 Creating media subfolders..."
 echo "   MEDIA_PATH: $MEDIA_PATH"
 echo "   DOWNLOADS_PATH: $DOWNLOADS_PATH"
 echo "   MOVIES_PATH: $MOVIES_PATH"
 echo "   SHOWS_PATH: $SHOWS_PATH"
 
-# Check if the parent directory exists and is writable
-MEDIA_PARENT=$(dirname "$MEDIA_PATH")
-echo "   Parent directory: $MEDIA_PARENT"
-if [ ! -d "$MEDIA_PARENT" ]; then
-    echo "⚠️ Parent directory $MEDIA_PARENT does not exist!"
+# Make sure MEDIA_PATH exists
+if [ ! -d "$MEDIA_PATH" ]; then
+    echo "⚠️ ERROR: MEDIA_PATH ($MEDIA_PATH) does not exist! Is your NVMe mounted?"
     exit 1
 fi
 
-if [ ! -w "$MEDIA_PARENT" ]; then
-    echo "⚠️ No write permission to $MEDIA_PARENT"
-    echo "   Trying with sudo..."
-    sudo mkdir -p "$MEDIA_PATH"
-    sudo mkdir -p "$DOWNLOADS_PATH"
-    sudo mkdir -p "$MOVIES_PATH"
-    sudo mkdir -p "$SHOWS_PATH"
-    sudo chown -R $USER:$USER "$MEDIA_PATH"
-    sudo chmod -R 775 "$MEDIA_PATH"
-else
-    echo "✅ Parent directory is writable, creating folders..."
-    mkdir -p "$MEDIA_PATH"
-    mkdir -p "$DOWNLOADS_PATH"
-    mkdir -p "$MOVIES_PATH"
-    mkdir -p "$SHOWS_PATH"
-    chmod -R 775 "$MEDIA_PATH"
-fi
+# Create subfolders
+mkdir -p "$DOWNLOADS_PATH" "$MOVIES_PATH" "$SHOWS_PATH"
+chmod -R 775 "$MEDIA_PATH"
+chown -R $USER:$USER "$MEDIA_PATH"
 
-echo "✅ Media folders created successfully"
+# Create download categories
+for category in "${QBIT_CATEGORIES[@]}"; do
+    mkdir -p "$DOWNLOADS_PATH/$category"
+done
+
+echo "✅ Media subfolders created successfully"
 
 # Create download category folders
 for category in "${QBIT_CATEGORIES[@]}"; do
