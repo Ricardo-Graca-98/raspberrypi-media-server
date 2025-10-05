@@ -85,6 +85,7 @@ chown -R $USER:$USER "$MEDIA_PATH"
 # Create download categories
 for category in "${QBIT_CATEGORIES[@]}"; do
     mkdir -p "$TEMP_DOWNLOADS_PATH/$category"
+    echo "✅ Category '$category' created successfully"
 done
 
 echo "✅ Media subfolders created successfully"
