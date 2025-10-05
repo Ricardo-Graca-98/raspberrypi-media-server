@@ -15,12 +15,12 @@ services:
     container_name: qbittorrent
     network_mode: "host"
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-      - WEBUI_PORT=${QBIT_WEBUI_PORT}
-      - QBIT_USERNAME=${QBIT_USERNAME}
-      - QBIT_PASSWORD=${QBIT_PASSWORD}
+      - PUID=${PUID=1000}
+      - PGID=${PGID=1000}
+      - TZ=${TZ=Europe/London}
+      - WEBUI_PORT=${QBIT_WEBUI_PORT=8080}
+      - QBIT_USERNAME=${QBIT_USERNAME=admin}
+      - QBIT_PASSWORD=${QBIT_PASSWORD=adminadmin}
     volumes:
       - ${MEDIA_PATH}/qbittorrent_config:/config
       - ${MEDIA_PATH}/${DOWNLOADS_PATH}:/downloads
@@ -31,9 +31,9 @@ services:
     container_name: radarr
     network_mode: "host"
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
+      - PUID=${PUID=1000}
+      - PGID=${PGID=1000}
+      - TZ=${TZ=Europe/London}
     volumes:
       - ${MEDIA_PATH}/radarr_config:/config
       - ${MEDIA_PATH}/${MOVIES_PATH}:/movies
@@ -45,9 +45,9 @@ services:
     container_name: sonarr
     network_mode: "host"
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
+      - PUID=${PUID=1000}
+      - PGID=${PGID=1000}
+      - TZ=${TZ=Europe/London}
     volumes:
       - ${MEDIA_PATH}/sonarr_config:/config
       - ${MEDIA_PATH}/${SHOWS_PATH}:/tv
@@ -59,9 +59,9 @@ services:
     container_name: jackett
     network_mode: "host"
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
+      - PUID=${PUID=1000}
+      - PGID=${PGID=1000}
+      - TZ=${TZ=Europe/London}
     volumes:
       - ${MEDIA_PATH}/jackett_config:/config
       - ${MEDIA_PATH}/${DOWNLOADS_PATH}:/downloads
@@ -72,7 +72,7 @@ services:
     container_name: jellyseerr
     network_mode: "host"
     environment:
-      - TZ=Europe/London
+      - TZ=${TZ=Europe/London}
       - LOG_LEVEL=info
     volumes:
       - ${MEDIA_PATH:-./media}/jellyseerr_config:/app/config
