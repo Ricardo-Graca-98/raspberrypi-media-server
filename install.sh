@@ -150,14 +150,15 @@ done
 # ---------------------------
 # Done
 # ---------------------------
+HOSTNAME=$(hostname)
 echo ""
 echo "✨ Setup complete!"
 echo "Access via:"
-echo "  Jellyfin → http://localhost:${JELLYFIN_PORT}"
-echo "  qBittorrent → http://localhost:${QBIT_WEBUI_PORT} (user: $QBIT_USERNAME / pass: $QBIT_PASSWORD)"
-echo "  Radarr → http://localhost:${RADARR_PORT} (category: $MOVIES_CATEGORY)"
-echo "  Sonarr → http://localhost:${SONARR_PORT} (category: $SHOWS_CATEGORY)"
-echo "  Jackett → http://localhost:${JACKETT_PORT}"
+echo "  Jellyfin → http://${HOSTNAME}.local:${JELLYFIN_PORT}"
+echo "  qBittorrent → http://${HOSTNAME}.local:${QBIT_WEBUI_PORT} (user: $QBIT_USERNAME / pass: $QBIT_PASSWORD)"
+echo "  Radarr → http://${HOSTNAME}.local:${RADARR_PORT} (category: $MOVIES_CATEGORY)"
+echo "  Sonarr → http://${HOSTNAME}.local:${SONARR_PORT} (category: $SHOWS_CATEGORY)"
+echo "  Jackett → http://${HOSTNAME}.local:${JACKETT_PORT}"
 echo ""
 echo "🔗 Please complete the Jellyfin setup wizard in your browser."
 echo "   Libraries should point to:"
