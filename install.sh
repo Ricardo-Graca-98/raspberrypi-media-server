@@ -2,6 +2,13 @@
 set -e
 
 # ---------------------------
+# Load .env if it exists
+# ---------------------------
+if [ -f .env ]; then
+    export $(grep -v '^#' .env | xargs)
+fi
+
+# ---------------------------
 # Load environment
 # ---------------------------
 : "${QBIT_USERNAME:=admin}"
