@@ -84,15 +84,10 @@ chown -R $USER:$USER "$MEDIA_PATH"
 
 # Create download categories
 for category in "${QBIT_CATEGORIES[@]}"; do
-    mkdir -p "$DOWNLOADS_PATH/$category"
+    mkdir -p "$TEMP_DOWNLOADS_PATH/$category"
 done
 
 echo "✅ Media subfolders created successfully"
-
-# Create download category folders
-for category in "${QBIT_CATEGORIES[@]}"; do
-    mkdir -p "$DOWNLOADS_PATH/$category"
-done
 
 # ---------------------------
 # Start Docker stack
