@@ -24,6 +24,29 @@ QBIT_CATEGORIES=("$MOVIES_CATEGORY" "$SHOWS_CATEGORY")
 MEDIA_SUBDIRS=("movies" "shows")
 
 # ---------------------------
+# Check / Install Docker & Compose
+# ---------------------------
+echo "🔍 Checking for Docker..."
+if ! command -v docker >/dev/null 2>&1; then
+    echo "⚠️ Docker not found. Installing..."
+    curl -fsSL https://get.docker.com | sh
+    sudo usermod -aG docker "$USER"
+    echo "✅ Docker installed. You may need to log out/in for group changes to take effect."
+else
+    echo "✅ Docker is already installed."
+fi
+
+echo "🔍 Checking for Docker Compose..."
+if ! command -v docker-compose >/dev/null 2>&1; then
+    echo "⚠️ Docker Compose not found. Installing..."
+    sudo apt-get update
+    sudo apt-get install -y docker-compose-plugin
+    echo "✅ Docker Compose installed."
+else
+    echo "✅ Docker Compose is already installed."
+fi
+
+# ---------------------------
 # Create media folders
 # ---------------------------
 echo "📁 Creating media folders..."
