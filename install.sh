@@ -6,7 +6,9 @@ set -e
 # ---------------------------
 if [ -f .env ]; then
     echo "📄 Loading .env file..."
-    export $(grep -v '^#' .env | xargs)
+    set -a
+    [ -f .env ] && . .env
+    set +a
     echo "✅ .env file loaded"
 else
     echo "⚠️ No .env file found, using defaults"
