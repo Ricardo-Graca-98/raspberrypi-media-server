@@ -63,9 +63,9 @@ fi
 # ---------------------------
 echo "📁 Creating media subfolders..."
 echo "   MEDIA_PATH: $MEDIA_PATH"
-echo "   DOWNLOADS_PATH: $DOWNLOADS_PATH"
-echo "   MOVIES_PATH: $MOVIES_PATH"
-echo "   SHOWS_PATH: $SHOWS_PATH"
+echo "   DOWNLOADS_PATH: $MEDIA_PATH/$DOWNLOADS_PATH"
+echo "   MOVIES_PATH: $MEDIA_PATH/$MOVIES_PATH"
+echo "   SHOWS_PATH: $MEDIA_PATH/$SHOWS_PATH"
 
 # Make sure MEDIA_PATH exists
 if [ ! -d "$MEDIA_PATH" ]; then
@@ -73,8 +73,12 @@ if [ ! -d "$MEDIA_PATH" ]; then
     exit 1
 fi
 
-# Create subfolders
-mkdir -p "$DOWNLOADS_PATH" "$MOVIES_PATH" "$SHOWS_PATH"
+# Create subfolders (temporarily override paths to ensure they're under MEDIA_PATH)
+TEMP_DOWNLOADS_PATH="$MEDIA_PATH/$DOWNLOADS_PATH"
+TEMP_MOVIES_PATH="$MEDIA_PATH/$MOVIES_PATH"
+TEMP_SHOWS_PATH="$MEDIA_PATH/$SHOWS_PATH"
+
+mkdir -p "$TEMP_DOWNLOADS_PATH" "$TEMP_MOVIES_PATH" "$TEMP_SHOWS_PATH"
 chmod -R 775 "$MEDIA_PATH"
 chown -R $USER:$USER "$MEDIA_PATH"
 
