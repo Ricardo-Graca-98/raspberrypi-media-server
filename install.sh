@@ -48,9 +48,9 @@ fi
 # ---------------------------
 echo "📁 Creating media folders..."
 mkdir -p "$MEDIA_PATH"
-for dir in "${MEDIA_SUBDIRS[@]}"; do
-    mkdir -p "${!dir^^}_PATH"  # Creates $MOVIES_PATH, $SHOWS_PATH
-done
+mkdir -p "$DOWNLOADS_PATH"
+mkdir -p "$MOVIES_PATH"
+mkdir -p "$SHOWS_PATH"
 chmod -R 775 "$MEDIA_PATH"
 
 # Create download category folders
