@@ -5,7 +5,11 @@ set -e
 # Load .env if it exists
 # ---------------------------
 if [ -f .env ]; then
+    echo "📄 Loading .env file..."
     export $(grep -v '^#' .env | xargs)
+    echo "✅ .env file loaded"
+else
+    echo "⚠️ No .env file found, using defaults"
 fi
 
 # ---------------------------
@@ -30,6 +34,15 @@ fi
 QBIT_CATEGORIES=("$MOVIES_CATEGORY" "$SHOWS_CATEGORY")
 MEDIA_SUBDIRS=("movies" "shows")
 
+# Debug: Show all environment variables
+echo "🔍 Environment variables after loading:"
+echo "   MEDIA_PATH: '$MEDIA_PATH'"
+echo "   DOWNLOADS_PATH: '$DOWNLOADS_PATH'"
+echo "   MOVIES_PATH: '$MOVIES_PATH'"
+echo "   SHOWS_PATH: '$SHOWS_PATH'"
+echo "   PUID: '$PUID'"
+echo "   PGID: '$PGID'"
+
 # ---------------------------
 # Check / Install Docker & Compose
 # ---------------------------
@@ -47,11 +60,38 @@ fi
 # Create media folders
 # ---------------------------
 echo "📁 Creating media folders..."
-mkdir -p "$MEDIA_PATH"
-mkdir -p "$DOWNLOADS_PATH"
-mkdir -p "$MOVIES_PATH"
-mkdir -p "$SHOWS_PATH"
-chmod -R 775 "$MEDIA_PATH"
+echo "   MEDIA_PATH: $MEDIA_PATH"
+echo "   DOWNLOADS_PATH: $DOWNLOADS_PATH"
+echo "   MOVIES_PATH: $MOVIES_PATH"
+echo "   SHOWS_PATH: $SHOWS_PATH"
+
+# Check if the parent directory exists and is writable
+MEDIA_PARENT=$(dirname "$MEDIA_PATH")
+echo "   Parent directory: $MEDIA_PARENT"
+if [ ! -d "$MEDIA_PARENT" ]; then
+    echo "⚠️ Parent directory $MEDIA_PARENT does not exist!"
+    exit 1
+fi
+
+if [ ! -w "$MEDIA_PARENT" ]; then
+    echo "⚠️ No write permission to $MEDIA_PARENT"
+    echo "   Trying with sudo..."
+    sudo mkdir -p "$MEDIA_PATH"
+    sudo mkdir -p "$DOWNLOADS_PATH"
+    sudo mkdir -p "$MOVIES_PATH"
+    sudo mkdir -p "$SHOWS_PATH"
+    sudo chown -R $USER:$USER "$MEDIA_PATH"
+    sudo chmod -R 775 "$MEDIA_PATH"
+else
+    echo "✅ Parent directory is writable, creating folders..."
+    mkdir -p "$MEDIA_PATH"
+    mkdir -p "$DOWNLOADS_PATH"
+    mkdir -p "$MOVIES_PATH"
+    mkdir -p "$SHOWS_PATH"
+    chmod -R 775 "$MEDIA_PATH"
+fi
+
+echo "✅ Media folders created successfully"
 
 # Create download category folders
 for category in "${QBIT_CATEGORIES[@]}"; do
