@@ -161,7 +161,7 @@ STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
   --data-urlencode "json={
     \"web_ui_username\": \"$QBIT_USERNAME\",
     \"web_ui_password\": \"$QBIT_PASSWORD\",
-    \"save_path\": \"$DOWNLOADS_PATH\"
+    \"save_path\": \"/$DOWNLOADS_PATH\"
   }")
 
 if [ "$STATUS" -eq 200 ]; then
