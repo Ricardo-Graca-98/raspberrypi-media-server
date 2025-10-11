@@ -8,7 +8,6 @@ services:
     volumes:
       - ${MEDIA_PATH}:/media
       - ${MEDIA_PATH}/jellyfin_config:/config
-      - mnt/nvme/jellyfin-transcodes:/transcodes
     restart: unless-stopped
 
   qbittorrent:
